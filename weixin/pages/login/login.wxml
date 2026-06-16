@@ -1,0 +1,11 @@
+<view class="login-container">
+  <view class="brand">
+    <text class="brand-title">熊猫哥健康管理</text>
+    <text class="brand-sub">您的个人健康助手</text>
+  </view>
+
+  <view class="login-box">
+    <button class="btn-primary login-btn" bindtap="wxLogin">微信一键登录</button>
+    <text class="tip">登录即表示同意用户协议与隐私政策</text>
+  </view>
+</view>

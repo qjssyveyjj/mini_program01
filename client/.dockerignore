@@ -1,0 +1,8 @@
+node_modules
+dist
+.git
+.gitignore
+.env
+.env.production
+.vscode
+npm-debug.log*

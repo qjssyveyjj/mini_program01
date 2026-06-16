@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/log/log",
+    "pages/chat/chat",
+    "pages/profile/profile",
+    "pages/login/login"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "熊猫哥健康管理",
+    "navigationBarBackgroundColor": "#42A5F5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#42A5F5",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/chat/chat",
+        "text": "AI客服"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

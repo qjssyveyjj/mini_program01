@@ -1,0 +1,34 @@
+<view class="container">
+  <view class="header card">
+    <text class="greeting">你好，{{nickname}}</text>
+    <text class="sub">关注每日健康，从记录开始</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">最新健康数据</view>
+    <block wx:if="{{latest}}">
+      <view class="metrics">
+        <view class="metric">
+          <text class="metric-value">{{latest.systolic || '--'}}/{{latest.diastolic || '--'}}</text>
+          <text class="metric-label">血压(mmHg)</text>
+        </view>
+        <view class="metric">
+          <text class="metric-value">{{latest.heartRate || '--'}}</text>
+          <text class="metric-label">心率(次/分)</text>
+        </view>
+        <view class="metric">
+          <text class="metric-value">{{latest.bloodOxygen || '--'}}</text>
+          <text class="metric-label">血氧(%)</text>
+        </view>
+        <view class="metric">
+          <text class="metric-value">{{latest.weight || '--'}}</text>
+          <text class="metric-label">体重(kg)</text>
+        </view>
+      </view>
+      <text class="time">测量时间：{{latest.timestamp}}</text>
+    </block>
+    <view wx:else class="empty">暂无健康数据，快去记录吧～</view>
+  </view>
+
+  <button class="log-btn btn-primary" bindtap="goLog">记录今日健康数据</button>
+</view>

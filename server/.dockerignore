@@ -1,0 +1,11 @@
+target/
+.idea/
+.mvn/wrapper/maven-wrapper.jar
+*.iml
+HELP.md
+.git
+.gitignore
+# 不打包本地密钥（容器内通过环境变量注入）
+.env
+uploads/*
+!uploads/.gitkeep

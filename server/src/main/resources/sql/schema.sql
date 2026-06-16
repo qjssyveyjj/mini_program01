@@ -1,0 +1,31 @@
+-- 健康管理系统数据库建表脚本（MySQL 8）
+-- 说明：项目默认使用 JPA ddl-auto=update 自动建表，本脚本供手动初始化或参考。
+
+CREATE DATABASE IF NOT EXISTS health_manager DEFAULT CHARSET = utf8mb4;
+USE health_manager;
+
+-- 用户表
+CREATE TABLE IF NOT EXISTS users (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  openid VARCHAR(64) NOT NULL UNIQUE COMMENT '微信openid',
+  nickname VARCHAR(50) DEFAULT '' COMMENT '用户昵称',
+  phone VARCHAR(20) DEFAULT '' COMMENT '手机号码',
+  avatar VARCHAR(255) DEFAULT '' COMMENT '头像地址',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT = '用户信息表';
+
+-- 健康数据表
+CREATE TABLE IF NOT EXISTS health_data (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_id BIGINT NOT NULL COMMENT '关联用户ID',
+  timestamp DATETIME NOT NULL COMMENT '数据时间',
+  systolic INT DEFAULT NULL COMMENT '收缩压(mmHg)',
+  diastolic INT DEFAULT NULL COMMENT '舒张压(mmHg)',
+  heart_rate INT DEFAULT NULL COMMENT '心率(次/分)',
+  blood_oxygen INT DEFAULT NULL COMMENT '血氧(%)',
+  weight DECIMAL(5, 2) DEFAULT NULL COMMENT '体重(kg)',
+  notes VARCHAR(255) DEFAULT '' COMMENT '备注',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT = '健康数据记录表';

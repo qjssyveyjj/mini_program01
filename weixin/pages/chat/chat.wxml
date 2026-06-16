@@ -1,0 +1,15 @@
+<view class="chat-container">
+  <scroll-view scroll-y="true" class="chat-area" scroll-into-view="{{scrollTo}}">
+    <view wx:for="{{messages}}" wx:key="index" id="msg{{index}}" class="msg-row {{item.from === 'user' ? 'row-user' : 'row-ai'}}">
+      <view class="{{item.from === 'user' ? 'msg-user' : 'msg-ai'}}">{{item.content}}</view>
+    </view>
+    <view wx:if="{{loading}}" class="msg-row row-ai">
+      <view class="msg-ai">正在思考...</view>
+    </view>
+  </scroll-view>
+
+  <view class="input-bar">
+    <input class="chat-input" placeholder="请输入健康问题..." value="{{inputValue}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMessage" />
+    <button class="send-btn btn-primary" bindtap="sendMessage">发送</button>
+  </view>
+</view>

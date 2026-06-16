@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="card">
+    <view class="form-item">
+      <text class="label">收缩压 (mmHg)</text>
+      <input class="input" type="number" placeholder="如 120" value="{{form.systolic}}" data-field="systolic" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="label">舒张压 (mmHg)</text>
+      <input class="input" type="number" placeholder="如 80" value="{{form.diastolic}}" data-field="diastolic" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="label">心率 (次/分)</text>
+      <input class="input" type="number" placeholder="如 72" value="{{form.heartRate}}" data-field="heartRate" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="label">血氧 (%)</text>
+      <input class="input" type="number" placeholder="如 98" value="{{form.bloodOxygen}}" data-field="bloodOxygen" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="label">体重 (kg)</text>
+      <input class="input" type="digit" placeholder="如 65.5" value="{{form.weight}}" data-field="weight" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="label">备注</text>
+      <input class="input" placeholder="选填" value="{{form.notes}}" data-field="notes" bindinput="onInput" />
+    </view>
+  </view>
+
+  <button class="btn-primary submit-btn" bindtap="submit">保存</button>
+</view>

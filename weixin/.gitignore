@@ -1,0 +1,8 @@
+# 本地环境配置，请勿提交
+config.js
+!config.example.js
+
+# 微信开发者工具
+project.private.config.json
+node_modules/
+miniprogram_npm/

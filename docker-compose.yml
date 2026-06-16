@@ -1,0 +1,58 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: health-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-your_db_password}
+      MYSQL_DATABASE: health_manager
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_PASSWORD:-your_db_password}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build: ./server
+    image: health-server:latest
+    container_name: health-server
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # 容器内通过环境变量注入配置，application.yml 中的 ${VAR} 会解析这些值
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/health_manager?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      DB_PASSWORD: ${DB_PASSWORD:-your_db_password}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://dashscope.aliyuncs.com/compatible-mode}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-your_dashscope_api_key}
+      WECHAT_APPID: ${WECHAT_APPID:-your_wechat_appid}
+      WECHAT_SECRET: ${WECHAT_SECRET:-your_wechat_secret}
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads-data:/app/uploads
+
+  client:
+    build:
+      context: ./client
+      args:
+        # 前端经 nginx 同源反代到后端，默认 /api
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+    image: health-client:latest
+    container_name: health-client
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "80:80"
+
+volumes:
+  mysql-data:
+  uploads-data:

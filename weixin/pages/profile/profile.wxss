@@ -1,0 +1,42 @@
+.profile-header {
+  display: flex;
+  align-items: center;
+}
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background-color: #eee;
+}
+.info {
+  margin-left: 24rpx;
+  display: flex;
+  flex-direction: column;
+}
+.nickname {
+  font-size: 34rpx;
+  font-weight: bold;
+}
+.phone {
+  font-size: 26rpx;
+  color: #888;
+  margin-top: 8rpx;
+}
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  font-size: 30rpx;
+}
+.menu-item:last-child {
+  border-bottom: none;
+}
+.arrow {
+  color: #ccc;
+}
+.relogin-btn {
+  margin-top: 32rpx;
+  border-radius: 48rpx;
+}

@@ -1,0 +1,20 @@
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.label {
+  width: 220rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+.input {
+  flex: 1;
+  font-size: 28rpx;
+  text-align: right;
+}
+.submit-btn {
+  margin-top: 32rpx;
+  border-radius: 48rpx;
+}
