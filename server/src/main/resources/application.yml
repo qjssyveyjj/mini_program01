@@ -5,10 +5,10 @@ spring:
   application:
     name: server
 
-  # MySQL 数据源配置（端口 3306，库名 health_manager）
+  # MySQL 数据源（连接外部数据库，通过 .env 配置）
   datasource:
-    url: jdbc:mysql://localhost:3306/health_manager?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:health_manager}?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:your_db_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
 

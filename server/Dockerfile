@@ -1,5 +1,5 @@
 # ---------- 构建阶段：使用 Maven + Temurin 17 (Alpine) 打包 ----------
-FROM maven:3.9-eclipse-temurin-17-alpine AS build
+FROM m.daocloud.io/docker.io/library/maven:3.9-eclipse-temurin-17-alpine AS build
 WORKDIR /app
 
 # 先复制 pom 以利用依赖缓存
@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn -B clean package -DskipTests
 
 # ---------- 运行阶段：使用 Temurin 17 JRE (Alpine) ----------
-FROM eclipse-temurin:17-jre-alpine
+FROM m.daocloud.io/docker.io/library/eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
 # 创建非 root 用户运行
