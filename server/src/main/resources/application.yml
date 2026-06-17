@@ -5,63 +5,44 @@ spring:
   application:
     name: server
 
-  # MySQL 数据源（连接外部数据库，通过 .env / docker-compose 环境变量配置）
+  # 数据库：在 .env 中配置 SPRING_DATASOURCE_URL / USERNAME / PASSWORD
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:health_manager}?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&connectTimeout=10000&socketTimeout=30000
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:your_db_password}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      connection-timeout: 30000
-      maximum-pool-size: 10
 
   jpa:
-    # 显式指定方言，避免连库失败时只报 “Unable to determine Dialect” 而掩盖真实原因
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-        format_sql: true
     open-in-view: false
 
-  # 文件上传大小限制
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
 
-  # Spring AI：使用 OpenAI 兼容接口对接阿里云百炼 DashScope
   ai:
     openai:
       base-url: ${OPENAI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode}
-      api-key: ${OPENAI_API_KEY:your_dashscope_api_key}
+      api-key: ${OPENAI_API_KEY}
       chat:
         options:
-          model: qwen-plus            # 通义千问对话模型
+          model: qwen-plus
       embedding:
         options:
-          model: text-embedding-v4    # 文本嵌入模型
+          model: text-embedding-v4
           dimensions: 2048
 
-# 文件上传目录（相对于后端运行目录）
 file:
   upload-dir: ./uploads/
 
-# 微信小程序配置（需替换为真实的 appid 与 secret）
 wechat:
-  appid: ${WECHAT_APPID:your_wechat_appid}
-  secret: ${WECHAT_SECRET:your_wechat_secret}
+  appid: ${WECHAT_APPID}
+  secret: ${WECHAT_SECRET}
 
-# 跨域允许来源（管理后台与本地调试）
 app:
   cors:
     allowed-origins: http://localhost:5173,http://localhost:3000
-
-# 启动时打印数据库连接相关日志，便于排查连库失败
-logging:
-  level:
-    com.zaxxer.hikari: INFO
-    org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator: WARN

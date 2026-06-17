@@ -4,32 +4,12 @@ services:
     image: health-server:latest
     container_name: health-server
     restart: unless-stopped
-    # 从项目根目录 .env 加载环境变量（密码含 # 时必须加引号）
     env_file:
       - .env
-    environment:
-      # Spring Boot 标准环境变量，优先级高于 application.yml
-      SPRING_DATASOURCE_URL: jdbc:mysql://${DB_HOST:-172.22.67.85}:${DB_PORT:-3306}/${DB_NAME:-health_manager}?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&connectTimeout=10000&socketTimeout=30000
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:-root}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-your_db_password}
-      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-      # 兼容 application.yml 中的其他占位符
-      DB_HOST: ${DB_HOST:-172.22.67.85}
-      DB_PORT: ${DB_PORT:-3306}
-      DB_NAME: ${DB_NAME:-health_manager}
-      DB_USERNAME: ${DB_USERNAME:-root}
-      DB_PASSWORD: ${DB_PASSWORD:-your_db_password}
-      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://dashscope.aliyuncs.com/compatible-mode/v1}
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-your_dashscope_api_key}
-      WECHAT_APPID: ${WECHAT_APPID:-your_wechat_appid}
-      WECHAT_SECRET: ${WECHAT_SECRET:-your_wechat_secret}
     ports:
       - "8080:8080"
     volumes:
       - uploads-data:/app/uploads
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/stats/users"]
       interval: 10s
