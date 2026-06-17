@@ -14,8 +14,9 @@ RUN mvn -B clean package -DskipTests
 FROM m.daocloud.io/docker.io/library/eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# 创建非 root 用户运行
-RUN addgroup -S app && adduser -S app -G app
+# 创建非 root 用户运行，并安装 curl 供健康检查使用
+RUN addgroup -S app && adduser -S app -G app \
+    && apk add --no-cache curl
 
 # 复制构建产物
 COPY --from=build /app/target/server-*.jar app.jar

@@ -5,20 +5,25 @@ spring:
   application:
     name: server
 
-  # MySQL 数据源（连接外部数据库，通过 .env 配置）
+  # MySQL 数据源（连接外部数据库，通过 .env / docker-compose 环境变量配置）
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:health_manager}?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:health_manager}?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&connectTimeout=10000&socketTimeout=30000
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:your_db_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
 
   jpa:
+    # 显式指定方言，避免连库失败时只报 “Unable to determine Dialect” 而掩盖真实原因
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      # 启动时根据实体自动更新表结构
       ddl-auto: update
     show-sql: true
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
     open-in-view: false
 
@@ -54,3 +59,9 @@ wechat:
 app:
   cors:
     allowed-origins: http://localhost:5173,http://localhost:3000
+
+# 启动时打印数据库连接相关日志，便于排查连库失败
+logging:
+  level:
+    com.zaxxer.hikari: INFO
+    org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator: WARN
