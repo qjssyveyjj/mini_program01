@@ -69,7 +69,8 @@ else
 fi
 
 echo ""
-echo "提示：JDBC URL 含 & 时必须加双引号，例如："
-echo 'SPRING_DATASOURCE_URL="jdbc:mysql://host:3306/db?useSSL=false&serverTimezone=Asia/Shanghai"'
+echo "========== 常见错误 =========="
+echo "若 docker logs 出现：Host '172.18.0.x' is not allowed to connect"
+echo "  → MySQL 未授权 Docker 容器 IP，需在数据库侧放行（见下方说明）"
 echo ""
 echo "修复后执行：docker compose down && docker compose up -d --build"

@@ -25,11 +25,15 @@ services:
     image: health-client:latest
     container_name: health-client
     restart: unless-stopped
+    # 等待 server 容器启动即可；不阻塞于 healthcheck（后端连库失败时仍可启动前端便于排查）
     depends_on:
-      server:
-        condition: service_healthy
+      - server
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      # SSL 证书（项目根目录 nginx/ 下的 pem 与 key）
+      - ./nginx:/etc/nginx/ssl:ro
 
 volumes:
   uploads-data:

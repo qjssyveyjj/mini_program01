@@ -2,6 +2,9 @@
 .env
 !.env.example
 
+# SSL 私钥勿提交（证书文件请自行保管）
+nginx/*.key
+
 # 依赖与构建产物
 **/node_modules/
 **/dist/
